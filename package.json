@@ -16,6 +16,7 @@
     "spa"
   ],
   "pre-commit": [
+    "lint",
     "build"
   ],
   "author": "",

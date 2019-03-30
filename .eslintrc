@@ -1,8 +1,5 @@
 {
   "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
   "rules": {
     "no-caller": "warn",//禁止使用arguments.caller或arguments.callee
     "max-len": ["warn", {"code": 160,"tabWidth":2,"ignoreComments": true}],
