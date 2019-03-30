@@ -1,0 +1,15 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        targets: {
+          chrome: '60'
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-custom-element-classes"
+  ]
+}
