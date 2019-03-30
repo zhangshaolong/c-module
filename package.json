@@ -7,11 +7,23 @@
     "build": "rm -rf dist && node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js --config tools/webpack/index.js",
     "lint": "eslint --ext .js src"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangshaolong/c-module.git"
+  },
+  "keywords": [
+    "module",
+    "spa"
+  ],
   "pre-commit": [
     "build"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhangshaolong/c-module/issues"
+  },
+  "homepage": "https://github.com/zhangshaolong/c-module#readme",
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
