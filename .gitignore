@@ -10,4 +10,4 @@ node_modules
 .idea
 .project
 .module-cache
-asset
+package-lock.json
