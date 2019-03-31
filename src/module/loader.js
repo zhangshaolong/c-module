@@ -18,13 +18,17 @@ const setLoader = (loader) => {
   moduleLoader = loader
 }
 
-export default (path, querys, container, context) => {
+export default (path, container) => {
   if (!moduleLoader) {
     return
   }
   Promise.all(moduleLoader(path)).then((values) => {
+    let props = container.getAttribute('c-props')
+    if (props) {
+      props = JSON.parse(props)
+    }
     const Module = values[0].default
-    const module = new Module(querys)
+    const module = new Module()
     const parentModule = getParentModule(container, container.tagName)
     let data
     if (parentModule) {
@@ -38,11 +42,12 @@ export default (path, querys, container, context) => {
       data = new Scope(module.data)
     }
     module.data = data
+    module.props = props
     module.container = container
+    container.module = module
     modulesMap[path] = module
     module.tpl = values[1].default
-    context.module = module
-    module.init(querys)
+    module.init()
   })
 }
 

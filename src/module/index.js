@@ -7,8 +7,13 @@ const checkCondition = {
   id: (node, value) => {
     return node.getAttribute('id') === value
   },
-  element: (node, value) => {
-    return node === value
+  rule: (node, value, container) => {
+    let items = container.querySelectorAll(value)
+    for (let i = 0; i < items.length; i++) {
+      if (items[i] === node) {
+        return node
+      }
+    }
   },
   tag: (node, value) => {
     return node.tagName === value.toUpperCase()
@@ -17,7 +22,7 @@ const checkCondition = {
 
 const loopCheck = (root, target, value, checkFun) => {
   if (target) {
-    if (checkFun(target, value)) {
+    if (checkFun(target, value, root)) {
       return target
     } else {
       if (target !== root) {
@@ -29,24 +34,24 @@ const loopCheck = (root, target, value, checkFun) => {
 
 class Module {
 
-  constructor (querys) {
+  constructor () {
     this.toBeDisposes = []
   }
 
-  init (querys) {
-    this.render()
+  init () {
     let events = this.bindEvents()
     if (events) {
       this.delegate(events)
     }
-    this.inited(querys)
+    this.render()
+    this.inited()
   }
 
-  inited (querys) {}
+  inited () {}
 
   bindEvents () {}
 
-  update (querys) {}
+  update () {}
 
   delegate (events) {
     for (let action in events) {
@@ -89,7 +94,7 @@ class Module {
 
 class CModule extends HTMLElement {
   static get observedAttributes() {
-    return ['querys']
+    return ['c-props']
   }
 
   constructor () {
@@ -100,7 +105,7 @@ class CModule extends HTMLElement {
   connectedCallback () {
     let path = this.getAttribute('path')
     if (path != null) {
-      loader(path, JSON.parse(this.getAttribute('querys')), this, this)
+      loader(path, this)
     }
   }
 
@@ -111,8 +116,16 @@ class CModule extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     clearTimeout(this.attributeChangedTimer)
     this.attributeChangedTimer = setTimeout(() => {
-      if (name === 'querys') {
-        this.module && this.module.update(JSON.parse(newValue))
+      if (name === 'c-props') {
+        if (this.module) {
+          let props = newValue
+          if (props) {
+            props = JSON.parse(newValue)
+          }
+          this.module.update({
+            props
+          })
+        }
       }
     }, 0)
   }

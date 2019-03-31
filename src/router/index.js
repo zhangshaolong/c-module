@@ -8,13 +8,20 @@ const getQueryString = (queryStr) => {
   return querys
 }
 
+const dealRedirect = (pathMap, path) => {
+  let modulePath = pathMap[path]
+  if (modulePath) {
+    if (pathMap[modulePath]) {
+      return pathMap[modulePath]
+    }
+  }
+  return modulePath
+}
+
 const watches = []
 
 const Router = {
-  context: {
-    path: null,
-    module: null
-  },
+  querys: {},
   start: (pathMap, rootModule) => {
     window.addEventListener('hashchange', (e) => {
       let hash = window.location.hash
@@ -24,24 +31,24 @@ const Router = {
       let pair = hash.slice(1).split('?')
       let querys = getQueryString('?' + pair[1])
       let path = pair[0]
-      let modulePath = pathMap[path]
+      let modulePath = dealRedirect(pathMap, path)
       if (!modulePath) {
         modulePath = pathMap['404']
       }
       if (modulePath) {
+        Router.querys = querys
+        let oldPath = rootModule.getAttribute('path')
         rootModule.setAttribute('path', modulePath)
-        const context = Router.context
-        let oldPath = context.path
-        if (oldPath !== path) {
-          context.path = path
-          context.module && context.module.dispose()
-          loader(modulePath, querys, rootModule, context)
+        if (oldPath !== modulePath) {
+          rootModule.module && rootModule.module.dispose()
+          loader(modulePath, rootModule)
         } else {
-          context.module.update(querys)
+          rootModule.module.update({
+            querys
+          })
         }
-
         watches.forEach((watcher) => {
-          watcher(path, oldPath, querys)
+          watcher(modulePath, oldPath)
         })
       } else {
         // 404
