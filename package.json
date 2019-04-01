@@ -4,6 +4,7 @@
   "description": "a module web development libary",
   "main": "dist/index.min.js",
   "scripts": {
+    "init": "npm install",
     "build": "rm -rf dist && node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js --config tools/webpack/index.js",
     "lint": "eslint --ext .js src"
   },
@@ -16,6 +17,7 @@
     "spa"
   ],
   "pre-commit": [
+    "init",
     "lint",
     "build"
   ],
