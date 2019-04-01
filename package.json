@@ -1,12 +1,12 @@
 {
   "name": "@zhangshaolongjj/c-module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "a module web development libary",
   "main": "dist/index.min.js",
   "scripts": {
-    "init": "npm install",
-    "build": "rm -rf dist && node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js --config tools/webpack/index.js",
-    "lint": "eslint --ext .js src"
+    "build": "npm run lint && rm -rf dist && node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js --config tools/webpack/index.js",
+    "lint": "eslint --ext .js src",
+    "publish": "npm install && npm run lint && npm run build && npm publish"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,6 @@
     "spa"
   ],
   "pre-commit": [
-    "init",
     "lint",
     "build"
   ],
