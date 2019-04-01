@@ -1,8 +1,9 @@
-import { Module, setLoader } from './module'
-import Router from './router'
+import { Router } from './router'
+import { Module, setLoader, loaderModule } from './module'
 
 export {
+  Router,
   Module,
   setLoader,
-  Router
+  loaderModule,
 }

@@ -1,10 +1,13 @@
 import Scope from './scope'
+import { moduleTag } from '../config'
 
 let moduleLoader = null
 
 const modulesMap = {}
 
-const getParentModule = (node, tagName) => {
+const tagName = moduleTag.toUpperCase()
+
+const getParentModule = (node) => {
   let parentNode = node.parentNode
   while (parentNode) {
     if (parentNode.tagName === tagName) {
@@ -18,18 +21,18 @@ const setLoader = (loader) => {
   moduleLoader = loader
 }
 
-export default (path, container) => {
+const loaderModule = (path, container) => {
   if (!moduleLoader) {
     return
   }
-  Promise.all(moduleLoader(path)).then((values) => {
+  return Promise.all(moduleLoader(path)).then((values) => {
     let props = container.getAttribute('c-props')
     if (props) {
       props = JSON.parse(props)
     }
     const Module = values[0].default
-    const module = new Module()
-    const parentModule = getParentModule(container, container.tagName)
+    const module = modulesMap[path] = new Module()
+    const parentModule = getParentModule(container)
     let data
     if (parentModule) {
       data = parentModule.data.child()
@@ -44,13 +47,13 @@ export default (path, container) => {
     module.data = data
     module.props = props
     module.container = container
-    container.module = module
-    modulesMap[path] = module
     module.tpl = values[1].default
+    container.module = module
     module.init()
   })
 }
 
 export {
+  loaderModule,
   setLoader
 }

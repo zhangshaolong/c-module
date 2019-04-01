@@ -1,4 +1,5 @@
-import loader, { setLoader } from './loader'
+import { moduleTag } from '../config'
+import { loaderModule, setLoader } from './loader'
 
 const checkCondition = {
   className: (node, value) => {
@@ -105,7 +106,7 @@ class CModule extends HTMLElement {
   connectedCallback () {
     let path = this.getAttribute('path')
     if (path != null) {
-      loader(path, this)
+      loaderModule(path, this)
     }
   }
 
@@ -131,9 +132,10 @@ class CModule extends HTMLElement {
   }
 }
 
-customElements.define('c-module', CModule)
+customElements.define(moduleTag, CModule)
 
 export {
   Module,
-  setLoader
+  setLoader,
+  loaderModule
 }

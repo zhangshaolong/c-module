@@ -1,4 +1,4 @@
-import loader from '../module/loader'
+import { loaderModule } from '../module/loader'
 
 const getQueryString = (queryStr) => {
   const querys = {}
@@ -41,7 +41,7 @@ const Router = {
         rootModule.setAttribute('path', modulePath)
         if (oldPath !== modulePath) {
           rootModule.module && rootModule.module.dispose()
-          loader(modulePath, rootModule)
+          loaderModule(modulePath, rootModule)
         } else {
           rootModule.module.update({
             querys
@@ -64,4 +64,6 @@ const Router = {
   }
 }
 
-export default Router
+export {
+  Router
+}

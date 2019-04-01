@@ -1,7 +1,7 @@
 {
   "name": "@zhangshaolongjj/c-module",
-  "version": "0.0.4",
-  "description": "",
+  "version": "0.0.5",
+  "description": "a module web development libary",
   "main": "dist/index.min.js",
   "scripts": {
     "build": "rm -rf dist && node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js --config tools/webpack/index.js",
