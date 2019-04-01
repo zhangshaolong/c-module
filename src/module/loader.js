@@ -49,7 +49,7 @@ const loaderModule = (path, container) => {
     module.container = container
     module.tpl = values[1].default
     container.module = module
-    module.init()
+    return module.init()
   })
 }
 
