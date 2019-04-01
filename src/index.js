@@ -5,5 +5,5 @@ export {
   Router,
   Module,
   setLoader,
-  loaderModule,
+  loaderModule
 }
