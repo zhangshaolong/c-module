@@ -21,7 +21,7 @@ const setLoader = (loader) => {
   moduleLoader = loader
 }
 
-const loaderModule = (path, container) => {
+const loadModule = (path, container) => {
   if (!moduleLoader) {
     return
   }
@@ -54,6 +54,6 @@ const loaderModule = (path, container) => {
 }
 
 export {
-  loaderModule,
+  loadModule,
   setLoader
 }

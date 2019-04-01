@@ -1,9 +1,9 @@
 import { Router } from './router'
-import { Module, setLoader, loaderModule } from './module'
+import { Module, setLoader, loadModule } from './module'
 
 export {
   Router,
   Module,
   setLoader,
-  loaderModule
+  loadModule
 }
