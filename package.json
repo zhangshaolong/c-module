@@ -1,6 +1,6 @@
 {
   "name": "@zhangshaolongjj/c-module",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "a module web development libary",
   "main": "dist/index.min.js",
   "scripts": {
